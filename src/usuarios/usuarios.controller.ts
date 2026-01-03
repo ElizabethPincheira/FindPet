@@ -3,9 +3,9 @@ import { UsuariosService } from './usuarios.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 
-@Controller('usuarios')
+@Controller('usuarios')//Este es el endpoint
 export class UsuariosController {
-  constructor(private readonly usuariosService: UsuariosService) {}
+  constructor(private readonly usuariosService: UsuariosService) {} //Aquí se conecta con  el service
 
   @Post()
   create(@Body() createUsuarioDto: CreateUsuarioDto) {
