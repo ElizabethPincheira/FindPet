@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
-import { CreateUsuarioDto } from './dto/create-usuario.dto';
+import { CreateUsuarioDto, LoginDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 
 @Controller('usuarios')//Este es el endpoint
@@ -31,4 +31,13 @@ export class UsuariosController {
   remove(@Param('id') id: string) {
     return this.usuariosService.remove(+id);
   }
+
+
+  //Login
+  @Post('login')
+  login(@Body() dto: LoginDto) {
+    return this.usuariosService.login(dto);
+  }
+
+
 }

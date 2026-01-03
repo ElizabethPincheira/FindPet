@@ -14,4 +14,5 @@
 docker-compose up -d
 ´´´
 6. Levantar: ´´´yarn start:dev´´´
-
+7. reconstruir la base de datos con la semilla
+´´´http://localhost:3000/usuarios´´´

@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUsuarioDto } from './dto/create-usuario.dto';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { CreateUsuarioDto, LoginDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { Usuario } from './entities/usuario.entity';
 import { Repository } from 'typeorm';
@@ -13,7 +13,7 @@ export class UsuariosService {
   constructor(
     @InjectRepository(Usuario)
     private readonly usuarioRepo: Repository<Usuario>,
-  ) {}
+  ) { }
 
   async create(dto: CreateUsuarioDto) {
     console.log('DTO recibido:', dto);
@@ -44,4 +44,33 @@ export class UsuariosService {
   remove(id: number) {
     return `This action removes a #${id} usuario`;
   }
+
+
+  //login method
+  async login(dto: LoginDto) {
+    const usuario = await this.usuarioRepo.findOne({
+      where: { correo_electronico: dto.correo_electronico },
+    });
+
+    if (!usuario) {
+      throw new UnauthorizedException('Credenciales incorrectas');
+    }
+
+    const passwordValida = await bcrypt.compare(
+      dto.contrasena,
+      usuario.contrasena,
+    );
+
+    if (!passwordValida) {
+      throw new UnauthorizedException('Credenciales incorrectas');
+    }
+
+    return usuario; // por ahora
+  }
+
+
+
+
+
+
 }
